@@ -19,7 +19,7 @@ app.add_middleware(
 def test_check(): 
     return "Hello World"
 
-
+# encode to json64 again
 @app.get("/prediction")
 def send_prediction(prediction_classification: str) -> json: 
     return {'prediction': prediction_classification}
@@ -40,7 +40,7 @@ def run_yolov5_detection(source_path: str):
     weights_path = "../best.pt"
     
     # Navigate to the YOLOv5 folder
-    os.chdir(yolov5_folder)
+    os.chdir(yolov5)
     
     command = f"python detect.py --weights {weights_path} --source {source_path}"
     

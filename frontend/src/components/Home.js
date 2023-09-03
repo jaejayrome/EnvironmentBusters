@@ -13,17 +13,17 @@ export default function Home() {
                         <div> 
                             <span className="text-5xl"> 
                                 Waste Management 
-                            </span>
-                            <span className="text-6xl block text-green-200">
+                            </span> 
+                            <span className="text-6xl block text-green-200"> 
                                 Simplified.
                             </span>
                         </div>
 
-                        <div className="text-2xl">
+                        <div className="text-2xl"> 
                             <span className="block"> 
                             Introducing 
-                                <span className="inline-block font-code">
-                                &nbsp;plastic_eliminator v1.0
+                                <span className="inline-block font-code"> 
+                                &nbsp;plastic_eliminator v1.0 
                                 </span>
                             <span className="block"> 
                                 An image classifier <span className="text-green-200">deep learning</span> model that aims to detect plastics

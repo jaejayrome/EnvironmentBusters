@@ -1,7 +1,8 @@
 import Header from "./components/Header";
 import Home from "./components/Home";
 import Motivation from "./components/Motivation";
-import Footer from "./components/Footer";
+import Footer from "./components/Footer"; 
+import Demo from "./components/Demo";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
         <Header />
         <Home />
         <Motivation />
+        <Demo/>
         <Footer />
       </div>
   );

@@ -1,9 +1,13 @@
-from fastapi import FastAPI
+from typing import List
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import json
 import base64
 import os
 import subprocess
+import uuid
+from image_handler import decode_file, encode_file
 
 app = FastAPI()
 
@@ -15,36 +19,40 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+class Image(BaseModel):
+    encoded_string_list: List[str]
+
 @app.get("/")
 def test_check(): 
     return "Hello World"
 
-# encode to json64 again
 @app.get("/prediction")
-def send_prediction(prediction_classification: str) -> json: 
-    return {'prediction': prediction_classification}
+def send_prediction(uuid: str) -> json: 
+    encoded_list = encode_file(uuid)
+    return json.dumps(encoded_list)
 
-@app.post("/image/{imageID}")
-def receive_image(imageID: str, imageExtension: str) -> None:
-    if not os.path.exists("img"):
-        os.makedirs("img")
-    decoded_bytes = base64.b64decode(imageID)
+@app.post("/image")
+def receive_image(body: Image) -> None:
+    try: 
+        # decode and save the image first 
+        transaction_uuid = uuid.uuid4()
+        decode_file(encoded_string_list=body.encoded_string_list, uuid=str(transaction_uuid))
+        # run the images through the model
+        # source path passed in is with respect to docker working directory
+        source_path = f"./input/{str(transaction_uuid)}"
+        run_yolov5_detection(source_path=source_path, uuid = str(transaction_uuid))
+    except Exception as e: 
+        raise HTTPException(status_code = "501", detail = str(e))
 
-    image_path = os.path.join("img", f"output_image.{imageExtension}")
 
-    with open(image_path, "wb") as image_file:
-        image_file.write(decoded_bytes)
-
-
-def run_yolov5_detection(source_path: str):
-    weights_path = "../best.pt"
+def run_yolov5_detection(source_path: str, uuid: str):
+    weights_path = "./best.pt"
+    output_path = f"exp_{uuid}"
     
-    # Navigate to the YOLOv5 folder
-    os.chdir(yolov5)
-    
-    command = f"python detect.py --weights {weights_path} --source {source_path}"
+    command = f"python yolov5/detect.py --weights {weights_path} --source {source_path}"
     
     try:
+        print(command)
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print("Error running YOLOv5 detection:", e)

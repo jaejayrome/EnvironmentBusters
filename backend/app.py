@@ -62,10 +62,10 @@ def run_yolov5_detection(source_path: str, uuid: str):
         print("An error occurred:", e)
 
 def run_yolov8_detection(source_path: str, uuid: str):
-    weights_path = "./yolov8_trained.pt"
-    output_path = f"exp_{uuid}"
-    
-    command = f"yolo task=detect mode=predict model={weights_path} conf=0.25 source={source_path} save=True"
+    model_path = "./yolov8_trained.pt"
+    output_path = f"./output/exp_{uuid}"
+
+    command = f"yolo task=detect mode=predict model={model_path} conf=0.25 source={source_path} save=True project={output_path} "
     try:
         print(command)
         subprocess.run(command, shell=True, check=True)

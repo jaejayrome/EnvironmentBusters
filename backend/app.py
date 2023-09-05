@@ -3,12 +3,8 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import json
-import base64
-import os
 import subprocess
-import uuid
 from image_handler import decode_file, encode_file
-import ultralytics
 
 app = FastAPI()
 
@@ -27,24 +23,29 @@ class Image(BaseModel):
 def test_check(): 
     return "Hello World"
 
-@app.get("/prediction")
+@app.get("/prediction/{uuid}")
 def send_prediction(uuid: str) -> json: 
-    encoded_list = encode_file(uuid)
-    return json.dumps(encoded_list)
-
-@app.post("/image")
-def receive_image(body: Image) -> None:
-    try: 
-        # decode and save the image first 
-        transaction_uuid = uuid.uuid4()
-        decode_file(encoded_string_list=body.encoded_string_list, uuid=str(transaction_uuid))
-        # run the images through the model
-        # source path passed in is with respect to docker working directory
-        source_path = f"./input/{str(transaction_uuid)}"
-        run_yolov8_detection(source_path=source_path, uuid = str(transaction_uuid))
+    try:
+        encoded_list = encode_file(uuid)
+        return json.dumps(encoded_list)
     except Exception as e: 
         raise HTTPException(status_code = "501", detail = str(e))
 
+@app.post("/image/{uuid}")
+def receive_image(body: Image, uuid: str):
+    try: 
+        decode_file(encoded_string_list=body.encoded_string_list, uuid=uuid)
+        source_path = f"./input/{uuid}"
+        run_yolov8_detection(source_path=source_path, uuid = uuid)
+        return successful_response(200)
+    except Exception as e: 
+        raise HTTPException(status_code = "501", detail = str(e))
+
+def successful_response(status_code: int):
+    return {
+        'status': status_code,
+        'transaction': 'Successful'
+    }
 
 def run_yolov5_detection(source_path: str, uuid: str):
     weights_path = "./best.pt"
@@ -61,10 +62,10 @@ def run_yolov5_detection(source_path: str, uuid: str):
         print("An error occurred:", e)
 
 def run_yolov8_detection(source_path: str, uuid: str):
-    model_path = "./yolov8_trained.pt"
-    output_path = f"./output/exp_{uuid}"
-
-    command = f"yolo task=detect mode=predict model={model_path} conf=0.25 source={source_path} save=True project={output_path} "
+    weights_path = "./yolov8_trained.pt"
+    output_path = f"exp_{uuid}"
+    
+    command = f"yolo task=detect mode=predict model={weights_path} conf=0.25 source={source_path} save=True"
     try:
         print(command)
         subprocess.run(command, shell=True, check=True)

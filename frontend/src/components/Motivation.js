@@ -8,7 +8,7 @@ export default function Motivation() {
                 <img src = {EnvironmentLogo}  alt = "" className="object-contain w-1/2 h-1/2"/>
                 <Box className="mx-auto py-5 text-center"> 
                     <span className="inline-block text-4xl font-roboto "> Waste Management </span>
-                    <span className="block text-4xl font-roboto"> Revolutionised. </span>
+                    <span className="block text-4xl font-roboto text-green-900"> Revolutionised. </span>
 
                     <span className="block mt-10 ml-2 mr-2 first_paragraph"> Climate change is the defining issue of our time and generation.
                     It has altered

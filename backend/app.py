@@ -8,6 +8,7 @@ import os
 import subprocess
 import uuid
 from image_handler import decode_file, encode_file
+import ultralytics
 
 app = FastAPI()
 
@@ -40,7 +41,7 @@ def receive_image(body: Image) -> None:
         # run the images through the model
         # source path passed in is with respect to docker working directory
         source_path = f"./input/{str(transaction_uuid)}"
-        run_yolov5_detection(source_path=source_path, uuid = str(transaction_uuid))
+        run_yolov8_detection(source_path=source_path, uuid = str(transaction_uuid))
     except Exception as e: 
         raise HTTPException(status_code = "501", detail = str(e))
 
@@ -60,10 +61,10 @@ def run_yolov5_detection(source_path: str, uuid: str):
         print("An error occurred:", e)
 
 def run_yolov8_detection(source_path: str, uuid: str):
-    weights_path = "./yolov8_trained.pt"
-    output_path = f"exp_{uuid}"
-    
-    command = f"yolo task=detect mode=predict model={weights_path} conf=0.25 source={source_path} save=True"
+    model_path = "./yolov8_trained.pt"
+    output_path = f"./output/exp_{uuid}"
+
+    command = f"yolo task=detect mode=predict model={model_path} conf=0.25 source={source_path} save=True project={output_path} "
     try:
         print(command)
         subprocess.run(command, shell=True, check=True)

@@ -26,7 +26,7 @@ export default function Home() {
                                 &nbsp;plastic_eliminator v1.0 
                                 </span>
                             <span className="block"> 
-                                An image classifier <span className="text-green-200">deep learning</span> model that aims to detect plastics
+                                An image classifier <span className="text-green-200">deep learning</span> model that aims to sort recyclable waste
                             </span>                         
                             </span>
                         </div>

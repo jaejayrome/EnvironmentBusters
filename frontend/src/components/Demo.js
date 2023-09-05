@@ -2,12 +2,7 @@ import { Box } from "@chakra-ui/layout";
 import { useState, useEffect, useRef } from 'react';
 
 export default function Demo() { 
-  const [file, setFile] = useState(); 
-  const imageUploadRef = useRef(null); 
-
-  const imageRefHandler = () => {
-    imageUploadRef.current.click();
-  };
+  const [file, setFile] = useState(''); 
 
   const convertToBase64 = async(file) => {
     return new Promise((resolve, reject) => {
@@ -24,7 +19,8 @@ export default function Demo() {
 
   const handleImageUpload = async (e) => { 
     const file = e.target.files[0]; 
-    const base64 = convertToBase64(file); 
+    setFile(file);
+    const base64 = await convertToBase64(file); 
     console.log(base64); 
     console.log(file);
   }
@@ -39,6 +35,7 @@ export default function Demo() {
       }
   });
   }, [])
+
   
   async function submitHandler(event) { 
     event.preventDefault();
@@ -46,20 +43,22 @@ export default function Demo() {
     const base64 = await convertToBase64(file[0]);
     console.log(base64);
     const form = event.currentTarget;
+    setFile('');
   }
   
   return (
-        <Box className=""> 
+        <Box className="" id="Demo"> 
             <Box className="flex flex-row"> 
                 <Box className="mx-auto py-5 text-center">
                   <form onSubmit={submitHandler}> 
                     <div> 
+                      
                             <span className="text-5xl"> 
                                 Upload Image Here 
                             </span> 
                         </div>
-                    <input ref={imageUploadRef} id="file-selector" type="file" /*onChange={handleImageUpload}*//>
-                    <button className="submitButton" onClick={submitHandler} /*onClick={imageRefHandler} */>
+                    <input id="file-selector" type="file"/>
+                    <button type="submit" className="submitButton" onClick={submitHandler}/*onClick={imageRefHandler} */>
                       Submit 
                     </button>
                   </form>

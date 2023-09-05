@@ -18,15 +18,15 @@ export default function Header() {
             </section> 
 
             <div className="flex flex-row space-x-4 font-roboto"> 
-                <Link to = "Home" style={{cursor: "pointer"}}className="p-2"> 
+                <Link to = "Home" spy={true} smooth={true} duration={500} style={{cursor: "pointer"}}className="p-2"> 
                 Home 
                 </Link>
 
-                <Link to="Motivation" style={{cursor: "pointer"}}className="p-2"> 
+                <Link to="Motivation" spy={true} smooth={true} duration={500} style={{cursor: "pointer"}}className="p-2"> 
                 About Us
                 </Link>
 
-                <Link to="Demo" style={{cursor: "pointer"}}className="bg-green-800 text-white rounded-xl p-2"> Demo </Link>
+                <Link to="Demo" spy={true} smooth={true} duration={500} style={{cursor: "pointer"}}className="bg-green-800 text-white rounded-xl p-2"> Demo </Link>
                 
             </div>
         </Box>

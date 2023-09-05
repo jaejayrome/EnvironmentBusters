@@ -1,12 +1,15 @@
 import { Box } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/react";
 import { useState, useEffect, useRef} from 'react';
+import { v4 } from 'uuid';
+import axios from "axios";
 
 export default function Demo() { 
   const [file, setFile] = useState(''); 
   const [haveImage, setHaveImage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);  
-  const [submitted, setIsSubmitted] = useState(false);
+  const [uuid, setUUID] = useState(null);
+  const [array, setArray] = useState([])
 
   const imageUploadRef = useRef(null);
 
@@ -27,6 +30,30 @@ export default function Demo() {
     });
   };
 
+  // need another method to convert back to img
+
+  const receiveEncodedFromBackend = (path_param) => {
+    console.log(uuid)
+    axios.get(`http://localhost:80/prediction/${path_param}`)
+    .then(response => console.log(response.data))
+    .catch(error => console.log(error))
+  }
+
+  const sendImagesToBackend = () => {
+    const path_param = v4().toString();
+    setUUID(path_param)
+    setIsLoading(true)
+    console.log(array);
+    axios.post(`http://localhost:80/image/${path_param}`, {
+      encoded_string_list : array
+    })
+    .then(response => {
+      setIsLoading(false)
+      receiveEncodedFromBackend(path_param)
+    })
+    .catch(error => console.log(error))
+  }
+
   useEffect(() => {
     const fileSelector = document.getElementById('file-selector');
     fileSelector.addEventListener('change', (event) => {
@@ -39,10 +66,6 @@ export default function Demo() {
   });
   }, [])
 
-  const backendCall = async () => {
-    setIsLoading(true)
-  }
-
   
   async function handleImageUpload (event) { 
       const selectedFiles = event.target.files;
@@ -51,7 +74,7 @@ export default function Demo() {
         const base64 = await convertToBase64(file);
         base64Array.push(base64);
       }
-      console.log(base64Array);
+      setArray(base64Array)
       setFile(''); 
   }
   
@@ -65,7 +88,7 @@ export default function Demo() {
                   > 
                   Upload Image
                   </Button>
-                  <Button className="" isDisabled = {!haveImage} loadingText = "Submitting" isLoading = {isLoading} onClick = {backendCall}> 
+                  <Button className="" isDisabled = {!haveImage} loadingText = "Submitting" isLoading = {isLoading} onClick = {sendImagesToBackend}> 
                   Submit 
                   </Button>
                   <input

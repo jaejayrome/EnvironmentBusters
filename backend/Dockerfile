@@ -2,7 +2,7 @@ FROM tiangolo/uvicorn-gunicorn-fastapi
 
 WORKDIR /app
 
-COPY ./yolov5/requirements.txt .
+COPY ./requirements.txt .
 
 RUN apt-get update && apt-get install -y libgl1-mesa-glx
 

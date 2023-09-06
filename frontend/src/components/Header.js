@@ -26,7 +26,13 @@ export default function Header() {
                 About Us
                 </Link>
 
+                <Link to="HowItWorks" spy={true} smooth={true} duration={500} style={{cursor: "pointer"}}className="p-2"> 
+                How It Works
+                </Link>
+
                 <Link to="Demo" spy={true} smooth={true} duration={500} style={{cursor: "pointer"}}className="bg-green-800 text-white rounded-xl p-2"> Demo </Link>
+
+
                 
             </div>
         </Box>

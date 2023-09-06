@@ -4,6 +4,7 @@ import Motivation from "./components/Motivation";
 import Footer from "./components/Footer"; 
 import Demo from "./components/Demo";
 import Conclusion from "./components/Conclusion";
+import HowItWorks from "./components/HowItWorks";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Header />
         <Home />
         <Motivation />
+        <HowItWorks/>
         <Demo/>
         <Conclusion />
         <Footer />

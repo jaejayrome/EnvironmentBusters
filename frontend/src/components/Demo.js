@@ -36,7 +36,7 @@ export default function Demo() {
   const receiveEncodedFromBackend = async (path_param) => {
     try {
       const response = await axios.get(
-        `http://localhost:80/prediction/${path_param}`
+      `${process.env.REACT_APP_BACKEND_BASE_URL}/prediction/${path_param}`
       );
       setReceivedArray(JSON.parse(response.data));
     } catch (error) {
@@ -49,7 +49,7 @@ export default function Demo() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(`http://localhost:80/image/${path_param}`, {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/image/${path_param}`, {
         encoded_string_list: array,
       });
       receiveEncodedFromBackend(path_param);
@@ -94,6 +94,12 @@ export default function Demo() {
   
   return (
         <Box className="" id="Demo"> 
+
+        <section id = "tutorial"> 
+          <div className="text-4xl font-roboto flex justify-center items-center py-4"> 
+            <span> Demonstration Guide </span>
+          </div>
+        </section>
             <Box className="flex flex-row"> 
                 <Box className="mx-auto py-5 text-center space-x-4">
                   <Button className="" onClick = {imageRefHandler}

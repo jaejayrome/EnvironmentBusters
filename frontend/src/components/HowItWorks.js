@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 export default function HowItWorks() { 
 
 // can change the text to this colour iusing the csss stilyle
-//  bg-gradient-to-r from-[#B0F9A9] to-[#17F9F2]  text-transparent bg-clip-text
+//  
 
   return(
   <Box id="HowItWorks" className="flex justify-center items-center flex-col bg-green-900">

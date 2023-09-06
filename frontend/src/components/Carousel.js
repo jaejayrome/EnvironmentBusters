@@ -33,7 +33,7 @@ export default function MyCarousel(props) {
 
   return (
       <div> 
-        {props.input && <Carousel showArrows autoPlay infiniteLoop stopOnHover width = "50%" centerMode dynamicHeight>
+        {props.input && <Carousel showArrows autoPlay infiniteLoop stopOnHover  centerMode dynamicHeight>
         {cards.map((image, index) => (
           <div key={index}>
             <img src={image} alt={`Image ${index}`}  className='object-contain '/>
@@ -41,7 +41,7 @@ export default function MyCarousel(props) {
         ))}
         </Carousel>}
 
-        {!props.input && <Carousel showArrows autoPlay infiniteLoop stopOnHover width = "50%" centerMode dynamicHeight>
+        {!props.input && <Carousel showArrows autoPlay infiniteLoop stopOnHover centerMode dynamicHeight>
         {cards.map((image, index) => (
           <div key={index}>
             <img src={`data:image/jpeg;base64, ${image}`}  alt = "" className="object-contain" key = {index}/>

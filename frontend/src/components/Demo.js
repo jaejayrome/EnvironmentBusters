@@ -2,14 +2,15 @@ import { Box } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/react";
 import { useState, useEffect, useRef} from 'react';
 import { v4 } from 'uuid';
+import MyCarousel from "./Carousel";
 import axios from "axios";
 
 export default function Demo() { 
-  const [file, setFile] = useState(''); 
+  const [file, setFile] = useState([]); 
   const [haveImage, setHaveImage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);  
-  const [uuid, setUUID] = useState(null);
   const [array, setArray] = useState([])
+  const [receivedArray, setReceivedArray] = useState([])
 
   const imageUploadRef = useRef(null);
 
@@ -30,36 +31,50 @@ export default function Demo() {
     });
   };
 
-  // need another method to convert back to img
 
-  const receiveEncodedFromBackend = (path_param) => {
-    console.log(uuid)
-    axios.get(`http://localhost:80/prediction/${path_param}`)
-    .then(response => console.log(response.data))
-    .catch(error => console.log(error))
-  }
 
-  const sendImagesToBackend = () => {
+  const receiveEncodedFromBackend = async (path_param) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:80/prediction/${path_param}`
+      );
+      setReceivedArray(JSON.parse(response.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const sendImagesToBackend = async () => {
     const path_param = v4().toString();
-    setUUID(path_param)
-    setIsLoading(true)
-    console.log(array);
-    axios.post(`http://localhost:80/image/${path_param}`, {
-      encoded_string_list : array
-    })
-    .then(response => {
-      setIsLoading(false)
-      receiveEncodedFromBackend(path_param)
-    })
-    .catch(error => console.log(error))
+    setIsLoading(true);
+
+    try {
+      const response = await axios.post(`http://localhost:80/image/${path_param}`, {
+        encoded_string_list: array,
+      });
+      receiveEncodedFromBackend(path_param);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   }
+
+  const convertFileListToArray = (fileList) => {
+    const array = [];
+    for (let i = 0; i < fileList.length; i++) {
+      array.push(fileList[i]);
+    }
+    return array;
+};
+
 
   useEffect(() => {
     const fileSelector = document.getElementById('file-selector');
     fileSelector.addEventListener('change', (event) => {
       if (event.target.files[0] != null) {
         const fileList = event.target.files;
-        setFile(fileList);
+        setFile([...fileList]);
         setHaveImage(true);
         console.log(fileList);
       }
@@ -75,13 +90,12 @@ export default function Demo() {
         base64Array.push(base64);
       }
       setArray(base64Array)
-      setFile(''); 
   }
   
   return (
         <Box className="" id="Demo"> 
             <Box className="flex flex-row"> 
-                <Box className="mx-auto py-5 text-center">
+                <Box className="mx-auto py-5 text-center space-x-4">
                   <Button className="" onClick = {imageRefHandler}
                   isDisabled = {isLoading}
                   colorScheme="teal"
@@ -101,8 +115,21 @@ export default function Demo() {
                   multiple
                   />
                 </Box>
-                
             </Box>
+
+            <section> 
+              <div className="flex flex-row mx-auto px-4"> 
+                <div> 
+                  {file && file.length > 0 && (<MyCarousel input = {true} images = {convertFileListToArray(file)}/>)}
+                </div>
+
+                <div> 
+                  {receivedArray.length > 0 && (<MyCarousel input = {false} images = {receivedArray}/>)}
+                </div>
+              </div>
+            </section>
+
+          
         </Box>
     )
 }

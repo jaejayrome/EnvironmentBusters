@@ -5,7 +5,7 @@ import os
 import re
 
 def remove_prefix(base64_encoded_string: str) -> str:
-    pattern = r'^data:image/png;base64,'
+    pattern = r'^data:image/[a-zA-Z]+;base64,'
     shortened_encoded_string = re.sub(pattern, '', base64_encoded_string)
     return shortened_encoded_string
 
@@ -15,9 +15,7 @@ def encode(folder_path: str, image_filename: str) -> str:
     with open(absolute_path, 'rb') as image_file: 
         base64_bytes = base64.b64encode(image_file.read())
         base64_string = base64_bytes.decode('utf-8') 
-        shortened_encoded_string = remove_prefix(base64_string)
-        return shortened_encoded_string
-        # return base64_bytes
+        return base64_string
 
 # file path to encode
 def encode_file(uuid: str) -> list: 
@@ -32,15 +30,15 @@ def encode_file(uuid: str) -> list:
     except Exception as e: 
         print(e)
 
-
 # after receiving from the frontend
 def decode(encoded_string: str, folder_path: str, index: int):
-    # need to remove this: 
-    # data:image/png;base64,
     try: 
-        file_path = os.path.join(folder_path, f"image_{index + 1}.png")
+        img_data = base64.b64decode(encoded_string)
+        im = Image.open(BytesIO(img_data))
+        image_format = im.format.lower()
+        file_path = os.path.join(folder_path, f"image_{index + 1}.{image_format}")
         im = Image.open(BytesIO(base64.b64decode(encoded_string)))
-        im.save(file_path, 'PNG')
+        im.save(file_path, image_format.upper())
     except: 
         raise ValueError
     

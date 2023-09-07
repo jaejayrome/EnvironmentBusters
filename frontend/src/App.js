@@ -4,6 +4,7 @@ import Motivation from "./components/Motivation";
 import Footer from "./components/Footer"; 
 import Demo from "./components/Demo";
 import Conclusion from "./components/Conclusion";
+import Automated from "./components/Automated";
 import HowItWorks from "./components/HowItWorks";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Motivation />
         <HowItWorks/>
         <Demo/>
+        <Automated />
         <Conclusion />
         <Footer />
       </div>

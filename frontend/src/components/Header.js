@@ -34,7 +34,7 @@ export default function Header() {
                 <div className="flex flex-row align-center justify-center items-center"> 
                     <img src = {Logo} alt="" className="object-contain w-20 h-20 "/>
                     <span className="font-logo"> 
-                    Environment Busters
+                    EcoVision
                     </span>
                 </div>
                 

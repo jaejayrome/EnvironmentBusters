@@ -66,6 +66,7 @@ def run_yolov8_detection(source_path: str, uuid: str):
     output_path = f"./output/exp_{uuid}"
 
     command = f"yolo task=detect mode=predict model={model_path} conf=0.25 source={source_path} save=True project={output_path} "
+    
     try:
         print(command)
         subprocess.run(command, shell=True, check=True)

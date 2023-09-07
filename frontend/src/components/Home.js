@@ -3,13 +3,14 @@ import NeuralNetworkLogo from "../images/front_page_logo.png";
 import YoloV5Logo from "../images/yolov5.png";
 import PytorchLogo from "../images/pytorch_logo.png"
 
+
 export default function Home() {
 
     return (
-        <Box className="min-w-full bg-green-900 py-40" id="Home"> 
-            <div className="flex flex-row justify-center space-between text-white font-roboto px-4 py-8"> 
+        <Box className="min-w-full bg-green-900 py-20 sm:py-40 overflow-x-hidden" id="Home"> 
+            <div className="flex flex-col-reverse sm:flex-row justify-center space-between text-white font-roboto px-4 py-8"> 
                 <section id = "left hand title"> 
-                    <div className=" flex flex-col space-y-4 text-center"> 
+                    <div className=" mt-5 sm:mt-0 flex flex-col space-y-4 text-center"> 
                         <div> 
                             <span className="text-5xl"> 
                                 Waste Management 

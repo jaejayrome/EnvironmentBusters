@@ -5,7 +5,7 @@ import { useState, useEffect, useRef} from 'react';
 import { v4 } from 'uuid';
 import MyCarousel from "./Carousel";
 import axios from "axios";
-import { FaCaretRight, FaCloudArrowUp, FaCheckDouble, FaClock, FaEye} from 'react-icons/fa6';
+import { FaCaretRight, FaCloudArrowUp, FaCheckDouble, FaClock, FaEye } from 'react-icons/fa6';
 
 export default function Demo() { 
   const [file, setFile] = useState([]); 
@@ -102,7 +102,7 @@ export default function Demo() {
         <section id = "tutorial"> 
           <div className="text-4xl font-roboto flex flex-col justify-center items-center py-4"> 
             <span className="block"> Now, the <span className="inline-block text-green-900"> Demonstration. </span></span>
-            <div className="grid-cols-4 grid gap-6 items-center mt-8 mx-10 min-h-full"> 
+            <div className="grid-rows-4 sm:grid-rows-1 sm:grid-cols-4 grid gap-6 items-center mt-8 mx-10 min-h-full"> 
               
       
               <div className="flex flex-col justify-center items-center bg-green-500 shadow-xl rounded-xl p-4 min-h-full hover:scale-105"> 
@@ -192,16 +192,16 @@ export default function Demo() {
         <section>
         <div className="bg-green-900 mt-10">
         {file.length > 0 && receivedArray.length > 0 && (
-          <div className="min-w-full mx-auto grid grid-cols-2 px-8 gap-4 mb-5">
-            <div className=" rounded-md mt-12 p-8 space-y-8 bg-green-900">
-            <span className="font-logo text-4xl my-8 block text-center text-green-200"> Input </span>
+          <div className="min-w-full mx-auto grid grid-rows-2 sm:grid-cols-2 px-8 gap-2 sm:gap-4 mb-5">
+            <div className="rounded-md mt-0 sm:mt-12 p-8 space-y-8 bg-green-900">
+            <span className="font-logo text-xl sm:text-4xl my-8 block text-center text-green-200"> Input </span>
               {file !== null && receivedArray !== null && file.length > 0 && (
                 <MyCarousel input={true} images={convertFileListToArray(file)} />
               )}
             </div>
 
-            <div className=" rounded-md mt-12 p-8 space-y-8 bg-green-900">
-            <span className="font-logo text-4xl my-8 block text-center text-green-200"> Output </span>
+            <div className=" rounded-md mt-0 sm:mt-12 p-8 space-y-8 bg-green-900">
+            <span className="font-logo text-xl sm:text-4xl  my-8 block text-center text-green-200"> Output </span>
               {receivedArray.length > 0 && (
                 <MyCarousel input={false} images={receivedArray} />
               )}
@@ -210,9 +210,9 @@ export default function Demo() {
         )}
 
         {file.length > 0 && receivedArray.length === 0 && (
-          <div className="w-1/2 mx-auto grid grid-cols-1 px-8 gap-6 mb-5">
-            <div className=" rounded-md mt-12 p-8 space-y-8 bg-green-900">
-            <span className="font-logo text-4xl my-8 block text-center text-green-200"> Input </span>
+          <div className="w-full sm:w-1/2 mx-auto grid grid-cols-1 px-8 gap-6 mb-5">
+            <div className=" rounded-md mt-0 sm:mt-12 p-8 space-y-8 bg-green-900">
+            <span className="font-logo text-xl sm:text-4xl  my-8 block text-center text-green-200"> Input </span>
               {file !== null && receivedArray !== null && file.length > 0 && (
                 <MyCarousel input={true} images={convertFileListToArray(file)} />
               )}
@@ -224,7 +224,7 @@ export default function Demo() {
 
 
         <Box className="flex items-center justify-center"> 
-          {file &&file.length > 0 ? (<span className="font-roboto text-white text-2xl"> Images Uploaded: <span className="text-green-200"> {file.length} </span></span>) : (<span className="text-white text-2xl font-roboto block mt-10"> <span className="text-green-200"> Start </span> By Uploading an Image!</span>)}
+          {file &&file.length > 0 ? (<span className="font-roboto text-white text-xl sm:text-2xl"> Images Uploaded: <span className="text-green-200"> {file.length} </span></span>) : (<span className="text-white text-2xl font-roboto block mt-10"> <span className="text-green-200"> Start </span> By Uploading an Image!</span>)}
         </Box>
 
         <Box className="flex flex-row"> 

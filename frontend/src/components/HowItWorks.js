@@ -22,7 +22,7 @@ export default function HowItWorks() {
         
     </Box>
 
-  <Grid templateColumns='repeat(3, 1fr)' gap={8} className='px-8 py-8'>
+    <div className='grid grid-rows-3 sm:grid-rows-1 sm:grid-cols-3 gap-8 px-8 py-8 sm:mb-8'>
     <Card className='items-center jusitfy-center flex shadow-xl p-4 hover:transform hover:scale-105'>
     <Image className = "w-1/3 h-1/3"src={NeuralNetworkLogo}></Image>
       <CardHeader>
@@ -55,7 +55,7 @@ export default function HowItWorks() {
       <CardFooter>
       </CardFooter>
     </Card>
-  </Grid>
+  </div>
 </Box>
   )
 }

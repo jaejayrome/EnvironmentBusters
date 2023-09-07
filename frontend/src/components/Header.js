@@ -1,9 +1,32 @@
 import { Box, UnorderedList, ListItem } from "@chakra-ui/layout";
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import { Button, ButtonGroup, useEditable } from '@chakra-ui/react'
 import { Link } from "react-scroll";
 import Logo from "../images/logo_left.png"
+import { useEffect, useState } from "react";
+import NavbarMobile from "./NavbarMobile";
+
 
 export default function Header() {
+    const [isMobile, setMobile] = useState(false);
+
+    useEffect(() => {
+        if (window.innerWidth < 430) {
+            setMobile(true);
+        } else {
+            setMobile(false);
+        }
+        const updateMedia = () => {
+            if (window.innerWidth < 430) {
+            setMobile(true);
+            } else {
+            setMobile(false);
+            }
+        };
+        
+        window.addEventListener('resize', updateMedia);
+        return () => window.removeEventListener('resize', updateMedia);
+    }, [])
+
     return (
         <Box className="flex flex-row justify-between items-center px-4 pt-2">
             <section className="logo">
@@ -17,7 +40,7 @@ export default function Header() {
                 
             </section> 
 
-            <div className="flex flex-row space-x-4 font-roboto"> 
+            {isMobile ? <NavbarMobile/> :<div className="flex flex-row space-x-4 font-roboto"> 
                 <Link to = "Home" spy={true} smooth={true} duration={500} style={{cursor: "pointer"}}className="p-2 hover:transform hover:scale-110 hover:underline hover:underline-offset-8"> 
                 Home 
                 </Link>
@@ -31,10 +54,7 @@ export default function Header() {
                 </Link>
 
                 <Link to="Demo" spy={true} smooth={true} duration={500} style={{cursor: "pointer"}}className="bg-green-800 text-white rounded-xl p-2 hover:transform hover:scale-110"> Demo </Link>
-
-
-                
-            </div>
+            </div>}
         </Box>
     )   
 }

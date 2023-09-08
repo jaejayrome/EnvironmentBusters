@@ -6,6 +6,8 @@ import { v4 } from 'uuid';
 import MyCarousel from "./Carousel";
 import axios from "axios";
 import { FaCaretRight, FaCloudArrowUp, FaCheckDouble, FaClock, FaEye } from 'react-icons/fa6';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 export default function Demo() { 
   const [file, setFile] = useState([]); 
@@ -33,7 +35,24 @@ export default function Demo() {
     });
   };
 
-  // bg-gradient-to-l from-indigo-400 to-teal-400 text-transparent bg-clip-text
+  const [ref, inView] = useInView({
+    triggerOnce: true
+  });
+
+
+
+
+  
+  
+  const animationVariants = {
+    hidden: { opacity: 0, x: -100 },
+    visible: { opacity: 1, x: 0 },
+  };
+
+  const sideAnimation = {
+    hidden: { opacity: 0, x: -100 },
+    visible: { opacity: 1, x: 0 },
+  }
 
 
 
@@ -103,7 +122,8 @@ export default function Demo() {
         <section id = "tutorial"> 
           <div className="text-4xl font-roboto flex flex-col justify-center items-center py-4"> 
             <span className="block"> Now, the <span className="inline-block text-green-900"> Demonstration. </span></span>
-            <div className="grid-rows-4 sm:grid-rows-1 sm:grid-cols-4 grid gap-6 items-center mt-8 mx-10 min-h-full"> 
+            <motion.div ref = {ref} variants = {animationVariants} animate = {inView ? "visible" : "hidden"} initial = "hidden" transition = {{duration: 0.5}}
+            className="grid-rows-4 sm:grid-rows-1 sm:grid-cols-4 grid gap-6 items-center mt-8 mx-10 min-h-full"> 
               
       
               <div className="flex flex-col justify-center items-center bg-green-500 shadow-xl rounded-xl p-4 min-h-full hover:scale-105"> 
@@ -111,7 +131,7 @@ export default function Demo() {
                   <FaCloudArrowUp />
                 </div>
 
-                <div className="flex flex-col justify-center items-center text-center text-black space-y-1"> 
+                <motion.div ref = {ref} variants = {sideAnimation} animate = {inView ? "visible" : "hidden"} initial = "hidden" transition = {{duration: 0.5, delay: 0.25}} className="flex flex-col justify-center items-center text-center text-black space-y-1"> 
                   <span className="mt-5"> 
                     STEP 1
                   </span>
@@ -124,12 +144,8 @@ export default function Demo() {
                   Multiple images can be selected.
                   </span>
 
-                </div>
+                </motion.div>
               </div>
-
-
-        
-              
 
               <div> 
                 <div className="flex flex-col justify-center items-center bg-teal-500 shadow-xl rounded-xl p-4 min-h-full hover:scale-105"> 
@@ -137,7 +153,7 @@ export default function Demo() {
                     <FaCheckDouble />
                   </div>
 
-                  <div className="flex flex-col justify-center items-center text-center text-black space-y-1"> 
+                  <motion.div ref = {ref} variants = {sideAnimation} animate = {inView ? "visible" : "hidden"} initial = "hidden" transition = {{duration: 0.5, delay: 0.25}} className="flex flex-col justify-center items-center text-center text-black space-y-1"> 
                     <span className="mt-5"> 
                       STEP 2
                     </span>
@@ -146,7 +162,7 @@ export default function Demo() {
                     Verify whether the images selected are reflective of your choice.
                     </span>
 
-                  </div>
+                  </motion.div>
                 </div>
 
 
@@ -157,7 +173,7 @@ export default function Demo() {
                     <FaClock />
                   </div>
 
-                  <div className="flex flex-col justify-center items-center text-center text-black space-y-1"> 
+                  <motion.div ref = {ref} variants = {sideAnimation} animate = {inView ? "visible" : "hidden"} initial = "hidden" transition = {{duration: 0.5, delay: 0.45}} className="flex flex-col justify-center items-center text-center text-black space-y-1"> 
                     <span className="mt-5"> 
                       STEP 3
                     </span>
@@ -165,7 +181,7 @@ export default function Demo() {
                     <span className="text-xl "> 
                     Click on Submit and Wait Patiently for Prediction to Load.
                     </span>
-                  </div>
+                  </motion.div>
                 </div>
 
 
@@ -175,7 +191,7 @@ export default function Demo() {
                     <FaEye />
                   </div>
 
-                  <div className="flex flex-col justify-center items-center text-center text-black space-y-1"> 
+                  <motion.div ref = {ref} variants = {sideAnimation} animate = {inView ? "visible" : "hidden"} initial = "hidden" transition = {{duration: 0.5, delay: 0.65}} className="flex flex-col justify-center items-center text-center text-black space-y-1"> 
                     <span className="mt-5"> 
                       STEP 4
                     </span>
@@ -183,9 +199,9 @@ export default function Demo() {
                     <span className="text-xl "> 
                     View Your Model Output!
                     </span>
-                  </div>
+                  </motion.div>
                 </div>
-            </div>
+            </motion.div>
           </div>
         </section>
             
@@ -230,12 +246,14 @@ export default function Demo() {
 
         <Box className="flex flex-row"> 
             <Box className="mx-auto py-5 text-center space-x-4">
+              
               <Button className="" onClick = {imageRefHandler}
               isDisabled = {isLoading}
               colorScheme="green"
               > 
               Upload Image
               </Button>
+
               <Button className="" isDisabled = {!haveImage} loadingText = "Submitting" isLoading = {isLoading} onClick = {sendImagesToBackend}> 
               Submit 
               </Button>

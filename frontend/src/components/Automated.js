@@ -6,8 +6,21 @@ import PytorchLogo from "../images/pytorch_logo.png"
 import FastLogo from '../images/fastest.png'
 import ProductionSpecification from "../images/production_specificationpng.png"
 import ProductionPrototype from "../images/prototype_bin.png"
+import { motion } from "framer-motion";
+import { useInView } from 'react-intersection-observer';
 
 export default function Automated() {
+
+    const [ref, inView] = useInView({
+        triggerOnce: true
+    });
+
+    const animationVariants = {
+        hidden: { opacity: 0, y: 75 },
+        visible: { opacity: 1, y: 0 },
+    };
+
+
     return (
         <div className="bg-white flex flex-col" id="Evaluation"> 
             <Box className="mx-auto py-5 text-center"> 
@@ -50,7 +63,7 @@ export default function Automated() {
             <div className="flex"> 
                 <div className="grid-rows-3 sm:grid-rows-1 sm:grid-cols-3 grid gap-8 mt-8 w-full min-h-full"> 
 
-                    <div className="p-4 mx-8 flex flex-col justify-center items-center text-green-900 bg-white shadow-xl rounded-xl border-2 border-green-900 min-h-full hover:scale-105"> 
+                <motion.div ref = {ref} variants = {animationVariants} animate = {inView ? "visible" : "hidden"} initial = "hidden" transition = {{duration: 0.5, delay: 0.25}} className="p-4 mx-8 flex flex-col justify-center items-center text-green-900 bg-white shadow-xl rounded-xl border-2 border-green-900 min-h-full hover:scale-105"> 
                         <div className="font-roboto text-2xl"> 
                             Accurate
                         </div>
@@ -60,9 +73,9 @@ export default function Automated() {
                         </div>
 
 
-                    </div>
+                    </motion.div>
 
-                    <div className="mx-8 flex flex-col justify-center items-center bg-white shadow-xl rounded-xl p-4 min-h-full border-2 border-green-900  hover:scale-105"> 
+                    <motion.div ref = {ref} variants = {animationVariants} animate = {inView ? "visible" : "hidden"} initial = "hidden" transition = {{duration: 0.5, delay: 0.45}} className="mx-8 flex flex-col justify-center items-center bg-white shadow-xl rounded-xl p-4 min-h-full border-2 border-green-900  hover:scale-105"> 
                         <div className="text-green-900 font-roboto text-xl"> 
                             Scalable
                         </div>
@@ -70,9 +83,9 @@ export default function Automated() {
                         <div className="text-green-900"> 
                             <span> <span className="font-bold"> Easy Deployment </span>  of Software irregardless of CPU Architecture with the use of <span className="font-bold"> Docker Containers</span> to host the model</span>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="mx-8 flex flex-col justify-center items-center bg-white shadow-xl rounded-xl p-4 min-h-full border-2 border-green-900 hover:scale-105"> 
+                    <motion.div ref = {ref} variants = {animationVariants} animate = {inView ? "visible" : "hidden"} initial = "hidden" transition = {{duration: 0.5, delay: 0.65}} className="mx-8 flex flex-col justify-center items-center bg-white shadow-xl rounded-xl p-4 min-h-full border-2 border-green-900 hover:scale-105"> 
                         <div className="text-green-900 font-roboto text-xl"> 
                             Compact
                         </div>
@@ -80,21 +93,21 @@ export default function Automated() {
                         <div className="text-green-900"> 
                             <span> Leveraging Raspberry Pis for container hosting provides a distinct <span className="font-bold">spatial efficiency advantage</span>, thanks to the <span className="font-bold">compact form factor</span> of these units.</span>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
 
             <section id ="product prototype"> 
             <div className="flex flex-col sm:flex-row items-center justify-center my-8 "> 
-                <div className="px-4"> 
+                <motion.div ref = {ref} variants = {animationVariants} animate = {inView ? "visible" : "hidden"} initial = "hidden" transition = {{duration: 0.5, delay: 0.85}} className="px-4"> 
                     <span className="text-2xl py-4 block font-roboto text-green-900"> Prototype Recycle Bin </span>
                     <img src = {ProductionPrototype} className="object-contain w-full h-full"/>
-                </div>
+                </motion.div>
 
-                <div className="px-4"> 
+                <motion.div ref = {ref} variants = {animationVariants} animate = {inView ? "visible" : "hidden"} initial = "hidden" transition = {{duration: 0.5, delay: 1.05}} className="px-4"> 
                     <span className="text-2xl py-4 block font-roboto text-green-900"> Prototype Architecture </span>
                     <img src = {ProductionSpecification} className="object-contain w-full h-full"/>
-                </div>
+                </motion.div>
             </div>
             </section>
         </div>

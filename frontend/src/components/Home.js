@@ -4,15 +4,39 @@ import YoloV5Logo from "../images/yolov5.png";
 import PytorchLogo from "../images/pytorch_logo.png"
 import {FaAnglesRight} from "react-icons/fa6"
 import { Link } from "react-scroll";
+import { motion, useInView, useAnimate, useAnimation } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 
 export default function Home() {
+    const ref = useRef(null);
+    const isInView = useInView(ref, {once : false});
+    const mainControls = useAnimation();
+
+    const bounceTransition = {
+            duration: 0.7,
+            repeat: Infinity,
+            repeatType: "reverse"
+    }
+
+    useEffect(() => {
+        if (isInView) {
+        mainControls.start("visible")
+    }
+    
+    }, [isInView])
 
     return (
         <Box className="min-w-full bg-green-900 py-20 sm:py-40 overflow-x-hidden" id="Home"> 
-            <div className="flex flex-col-reverse sm:flex-row justify-center space-between text-white font-roboto px-4 py-8"> 
+            <div ref = {ref} className="flex flex-col-reverse sm:flex-row justify-center space-between text-white font-roboto px-4 py-8"> 
                 <section id = "left hand title"> 
-                    <div className=" mt-5 sm:mt-0 flex flex-col space-y-4 text-center"> 
+                    <motion.div variants = {{
+                            hidden: {opacity: 0, y: 75}, 
+                            visible: {opacity: 1, y: 0},
+                            }}
+                            initial = "hidden"
+                            animate = {mainControls}
+                            transition = {{delay: 0.25, duration: 0.5}} className=" mt-5 sm:mt-0 flex flex-col space-y-4 text-center"> 
                         <div> 
                             <span className="text-5xl"> 
                                 Waste Management 
@@ -33,7 +57,7 @@ export default function Home() {
                             </span>                         
                             </span>
                         </div>
-                    </div>
+                    </motion.div>
                     
                 </section>
                 <section className="right hand showcase"> 
@@ -45,7 +69,7 @@ export default function Home() {
             </div>
             <section id = "tech-stack"> 
             
-                <div className="flex flex-row justify-center items-center"> 
+            <motion.div  animate = {{scale: 1.1}} transition={bounceTransition} className="flex flex-row justify-center items-center"> 
                 <Link to="Demo" spy={true} smooth={true} duration={500} style={{cursor: "pointer"}}>
                     <div className="bg-green-200 mt-8 px-4 py-4 mx-auto flex flex-row items-center justify-center rounded-xl"> 
                         <div className="flex flex-row justify-center items-center space-x-2"> 
@@ -57,7 +81,7 @@ export default function Home() {
                         
                     </div>
                 </Link>
-                </div>
+                </motion.div>
             </section>
         </Box>
     )

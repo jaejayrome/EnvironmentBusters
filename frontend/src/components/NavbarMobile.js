@@ -24,13 +24,13 @@ export default function NavbarMobile() {
         <IconButton variant = "outlined" aria-label='navbar-mobile' icon={<FaAlignJustify />} onClick={handleClick}> 
         </IconButton>
 
-        <Drawer onClose={onClose} isOpen={isOpen} size="xs" placement='top' closeOnEsc blockScrollOnMount returnFocusOnClose = {false}>
+        <Drawer onClose={onClose} isOpen={isOpen} size="md" placement='top' closeOnEsc blockScrollOnMount returnFocusOnClose = {false}>
         <DrawerOverlay />
         <DrawerContent>
             <DrawerCloseButton />
             {/* <DrawerHeader>{`Environment Busters`}</DrawerHeader> */}
             <DrawerBody>
-            <div className="flex flex-row space-x-4 font-roboto"> 
+            <div className="flex flex-col font-roboto"> 
                 <Link to = "Home" spy={true} smooth={true} duration={500} style={{cursor: "pointer"}}className="p-2 hover:transform hover:scale-110 hover:underline hover:underline-offset-8"> 
                 Home 
                 </Link>
@@ -43,7 +43,11 @@ export default function NavbarMobile() {
                 How It Works
                 </Link>
 
-                <Link to="Demo" spy={true} smooth={true} duration={500} style={{cursor: "pointer"}}className="bg-green-900 text-white p-2 rounded-xl justify-center items-center flex hover:transform hover:scale-110"> 
+                <Link to="Evaluation" spy={true} smooth={true} duration={500} style={{cursor: "pointer"}}className="p-2 hover:transform hover:scale-110 hover:underline hover:underline-offset-8"> 
+                Evaluation
+                </Link>
+
+                <Link to="Demo" spy={true} smooth={true} duration={500} style={{cursor: "pointer"}}className="bg-green-900 text-white px-1 justify-center mt-2 rounded-xl items-center flex hover:transform hover:scale-110"> 
                 <span> Demo </span> 
                 </Link>
             </div>

@@ -2,6 +2,8 @@ import { Box } from "@chakra-ui/layout"
 import NeuralNetworkLogo from "../images/front_page_logo.png";
 import YoloV5Logo from "../images/yolov5.png";
 import PytorchLogo from "../images/pytorch_logo.png"
+import {FaAnglesRight} from "react-icons/fa6"
+import { Link } from "react-scroll";
 
 
 export default function Home() {
@@ -27,7 +29,7 @@ export default function Home() {
                                 &nbsp;plastic_eliminator v1.0 
                                 </span>
                             <span className="block"> 
-                                An image classifier <span className="text-green-200">deep learning</span> model that aims to sort recyclable waste
+                                An Object Detection <span className="text-green-200">Deep Learning</span> Model that aims to sort recyclable waste
                             </span>                         
                             </span>
                         </div>
@@ -44,14 +46,17 @@ export default function Home() {
             <section id = "tech-stack"> 
             
                 <div className="flex flex-row justify-center items-center"> 
-                    <div className="bg-green-200 mt-8 px-2 py-0 mx-auto flex flex-row items-center justify-center rounded-xl"> 
-                        <span> 
-                            Built With
-                        </span>
+                <Link to="Demo" spy={true} smooth={true} duration={500} style={{cursor: "pointer"}}>
+                    <div className="bg-green-200 mt-8 px-4 py-4 mx-auto flex flex-row items-center justify-center rounded-xl"> 
+                        <div className="flex flex-row justify-center items-center space-x-2"> 
+                            <span className="text-2xl font-roboto text-green-900"> 
+                                Try It Out
+                            </span>
+                            <FaAnglesRight className="text-green-900 text-xl" />
+                        </div>
                         
-                        <img src = {YoloV5Logo} alt = "" className="object-contain w-20 h-20"/>
-                        <img src = {PytorchLogo} alt = "" className="object-contain w-20 h-20"/>
                     </div>
+                </Link>
                 </div>
             </section>
         </Box>

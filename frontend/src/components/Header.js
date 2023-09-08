@@ -46,11 +46,15 @@ export default function Header() {
                 </Link>
 
                 <Link to="Motivation" spy={true} smooth={true} duration={500} style={{cursor: "pointer"}}className="p-2 hover:transform hover:scale-110 hover:underline hover:underline-offset-8"> 
-                About Us
+                Problem
                 </Link>
 
                 <Link to="HowItWorks" spy={true} smooth={true} duration={500} style={{cursor: "pointer"}}className="p-2 hover:transform hover:scale-110 hover:underline hover:underline-offset-8"> 
                 How It Works
+                </Link>
+
+                <Link to="Evaluation" spy={true} smooth={true} duration={500} style={{cursor: "pointer"}}className="p-2 hover:transform hover:scale-110 hover:underline hover:underline-offset-8"> 
+                Evaluation
                 </Link>
 
                 <Link to="Demo" spy={true} smooth={true} duration={500} style={{cursor: "pointer"}}className="bg-green-800 text-white rounded-xl p-2 hover:transform hover:scale-110"> Demo </Link>

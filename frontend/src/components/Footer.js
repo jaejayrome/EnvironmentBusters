@@ -4,7 +4,7 @@ export default function Footer() {
     return (
         <div className="bg-gradient-to-r from-[#B0F9A9] to-[#17F9F2] flex flex-col justify-center items-center p-4"> 
             <div>
-                &#xA9; 2023 EnvironmentBusters
+                &#xA9; 2023 EcoVision
             </div>
             
             

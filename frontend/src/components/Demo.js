@@ -42,8 +42,10 @@ export default function Demo() {
       const response = await axios.get(
       `${process.env.REACT_APP_BACKEND_BASE_URL}/prediction/${path_param}`
       );
+      setTimeout(10000);
       setReceivedArray(JSON.parse(response.data));
     } catch (error) {
+      
       console.log(error);
     }
   };
@@ -60,7 +62,6 @@ export default function Demo() {
     } catch (error) {
       console.log(error);
     } finally {
-      setTimeout(5000);
       setIsLoading(false);
     }
   }
@@ -192,15 +193,15 @@ export default function Demo() {
         <section>
         <div className="bg-green-900 mt-10">
         {file.length > 0 && receivedArray.length > 0 && (
-          <div className="min-w-full mx-auto grid grid-rows-2 sm:grid-cols-2 px-8 gap-2 sm:gap-4 mb-5">
-            <div className="rounded-md mt-0 sm:mt-12 p-8 space-y-8 bg-green-900">
+          <div className="min-w-full mx-auto grid grid-rows-2 sm:grid-rows-1 sm:grid-cols-2 px-8 gap-2 sm:gap-4 mb-5">
+            <div className="rounded-md mt-0 sm:mt-10 p-8 space-y-8 bg-green-900">
             <span className="font-logo text-xl sm:text-4xl my-8 block text-center text-green-200"> Input </span>
               {file !== null && receivedArray !== null && file.length > 0 && (
                 <MyCarousel input={true} images={convertFileListToArray(file)} />
               )}
             </div>
 
-            <div className=" rounded-md mt-0 sm:mt-12 p-8 space-y-8 bg-green-900">
+            <div className=" rounded-md mt-0 sm:mt-10 p-8 space-y-8 bg-green-900">
             <span className="font-logo text-xl sm:text-4xl  my-8 block text-center text-green-200"> Output </span>
               {receivedArray.length > 0 && (
                 <MyCarousel input={false} images={receivedArray} />

@@ -61,7 +61,6 @@ export default function Demo() {
       const response = await axios.get(
       `${process.env.REACT_APP_BACKEND_BASE_URL}/prediction/${path_param}`
       );
-      setTimeout(3000);
       setReceivedArray(JSON.parse(response.data));
     } catch (error) {
       
@@ -81,6 +80,7 @@ export default function Demo() {
     } catch (error) {
       console.log(error);
     } finally {
+      setTimeout(3000);
       setIsLoading(false);
     }
   }
